@@ -1,0 +1,807 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+    ViewData["ActivePage"] = "Home";
+    Layout = "~/Views/Shared/_Khung.cshtml";
+}
+
+@section Styles {
+    <style>
+    .hero {
+        position: relative;
+        height: 540px;
+        overflow: hidden;
+        background: #09090f;
+    }
+    .hero-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity .7s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        filter: brightness(.45);
+    }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(9,9,15,.9) 0%, rgba(9,9,15,.4) 55%, transparent 100%);
+    }
+    .hero-content {
+        position: absolute;
+        bottom: 64px;
+        left: 0;
+        max-width: 560px;
+        padding: 0 48px;
+        animation: slideUp .6s ease both;
+    }
+    .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--accent);
+        color: #000;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 14px;
+    }
+    .hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(36px, 5vw, 56px);
+        letter-spacing: 2px;
+        line-height: 1.05;
+        margin-bottom: 14px;
+        text-shadow: 0 2px 20px rgba(0,0,0,.5);
+    }
+    .hero-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+    .hero-meta span {
+        font-size: 13px;
+        color: rgba(240,239,245,.7);
+    }
+    .hero-meta .sep { color: rgba(255,255,255,.25); }
+    .hero-desc {
+        font-size: 14px;
+        color: rgba(240,239,245,.7);
+        line-height: 1.7;
+        margin-bottom: 28px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary-cv {
+        background: var(--accent);
+        color: #000;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 12px 28px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all .2s;
+    }
+    .btn-primary-cv:hover { background: var(--accent-dim); transform: translateY(-2px); color: #000; }
+    .btn-outline-cv {
+        background: rgba(255,255,255,.08);
+        color: var(--text-primary);
+        font-weight: 500;
+        font-size: 14px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,.15);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all .2s;
+        text-decoration: none;
+    }
+    .btn-outline-cv:hover { background: rgba(255,255,255,.14); color: var(--text-primary); }
+
+    /* Slider dots & arrows */
+    .hero-dots {
+        position: absolute;
+        bottom: 22px;
+        left: 48px;
+        display: flex;
+        gap: 8px;
+    }
+    .hero-dot {
+        width: 24px; height: 3px;
+        background: rgba(255,255,255,.3);
+        border-radius: 2px;
+        cursor: pointer;
+        border: none;
+        padding: 0;
+        transition: all .2s;
+    }
+    .hero-dot.active { background: var(--accent); width: 40px; }
+    .hero-arrows {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .hero-arrow {
+        width: 40px; height: 40px;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .hero-arrow:hover { background: var(--accent); border-color: var(--accent); color: #000; }
+
+    /* ===== QUICK BOOKING BAR ===== */
+    .booking-bar {
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border);
+        padding: 18px 0;
+    }
+    .booking-bar .container { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .booking-label {
+        font-family: var(--font-display);
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: var(--accent);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    .booking-select {
+        flex: 1;
+        min-width: 160px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        font-size: 13px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        outline: none;
+        cursor: pointer;
+        transition: border-color .2s;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238b8a99' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 36px;
+    }
+    .booking-select:focus { border-color: rgba(232,184,75,.4); }
+    .booking-select option { background: var(--bg-card); }
+    .btn-book-now {
+        background: var(--accent);
+        color: #000;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 10px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all .2s;
+        letter-spacing: 0.5px;
+    }
+    .btn-book-now:hover { background: var(--accent-dim); }
+
+    /* ===== SECTION WRAPPER ===== */
+    .cv-section {
+        padding: 56px 0 16px;
+    }
+    .section-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 28px;
+    }
+    .section-header a {
+        font-size: 13px;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: gap .2s;
+    }
+    .section-header a:hover { gap: 8px; }
+
+    /* ===== MOVIE CARD ===== */
+    .movie-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .movie-card {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        transition: transform .25s, border-color .25s, box-shadow .25s;
+        cursor: pointer;
+    }
+    .movie-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(232,184,75,.25);
+        box-shadow: 0 12px 40px rgba(0,0,0,.45);
+    }
+    .movie-poster {
+        position: relative;
+        aspect-ratio: 2/3;
+        overflow: hidden;
+    }
+    .movie-poster img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        transition: transform .4s;
+    }
+    .movie-card:hover .movie-poster img { transform: scale(1.05); }
+    .movie-poster-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(9,9,15,.85) 0%, transparent 55%);
+        opacity: 0;
+        transition: opacity .3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .movie-card:hover .movie-poster-overlay { opacity: 1; }
+    .btn-play {
+        width: 52px; height: 52px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: #000;
+        transform: scale(.8);
+        transition: transform .25s;
+    }
+    .movie-card:hover .btn-play { transform: scale(1); }
+    .movie-badge-wrap {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+    .movie-info {
+        padding: 14px 14px 16px;
+    }
+    .movie-title {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 6px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+    }
+    .movie-meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+    .movie-genre {
+        font-size: 11px;
+        color: var(--text-muted);
+    }
+    .movie-duration {
+        font-size: 11px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+    .btn-book-card {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: transparent;
+        border: 1px solid rgba(232,184,75,.35);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all .2s;
+        letter-spacing: 0.5px;
+    }
+    .btn-book-card:hover {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+    }
+
+    /* ===== COMING SOON - horizontal scroll ===== */
+    .coming-scroll-wrap {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-bottom: 8px;
+    }
+    .coming-scroll-wrap::-webkit-scrollbar { display: none; }
+    .coming-row {
+        display: flex;
+        gap: 16px;
+        min-width: max-content;
+    }
+    .coming-card {
+        width: 160px;
+        flex-shrink: 0;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        transition: transform .25s;
+        cursor: pointer;
+    }
+    .coming-card:hover { transform: translateY(-4px); }
+    .coming-poster {
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+    }
+    .coming-poster img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        filter: brightness(.75);
+        transition: transform .4s;
+    }
+    .coming-card:hover .coming-poster img { transform: scale(1.06); }
+    .coming-date-badge {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: var(--accent);
+        color: #000;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 4px;
+    }
+    .coming-info {
+        padding: 12px;
+    }
+    .coming-title {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+    }
+    .coming-genre {
+        font-size: 11px;
+        color: var(--text-muted);
+    }
+
+    /* ===== PROMO BANNER ===== */
+    .promo-banner {
+        background: linear-gradient(135deg, #1a1025 0%, #0d1a2e 100%);
+        border: 1px solid rgba(232,184,75,.12);
+        border-radius: 16px;
+        padding: 48px 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        margin: 48px 0;
+        overflow: hidden;
+        position: relative;
+    }
+    .promo-banner::before {
+        content: '';
+        position: absolute;
+        top: -60px; right: -60px;
+        width: 280px; height: 280px;
+        background: radial-gradient(circle, rgba(232,184,75,.12) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .promo-text {}
+    .promo-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+    }
+    .promo-title {
+        font-family: var(--font-display);
+        font-size: clamp(24px, 3vw, 34px);
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+    }
+    .promo-desc {
+        font-size: 14px;
+        color: var(--text-muted);
+        max-width: 380px;
+        line-height: 1.7;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @@media (max-width: 767px) {
+        .hero { height: 420px; }
+        .hero-content { padding: 0 20px; bottom: 44px; }
+        .booking-bar .container { gap: 8px; }
+        .booking-select { min-width: 130px; }
+        .promo-banner { padding: 32px 24px; flex-direction: column; }
+    }
+    </style>
+}
+
+<!-- HERO BANNER -->
+<section class="hero" id="hero">
+    <!-- Slide 1 -->
+    <div class="hero-slide active" id="slide-0">
+        <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_2_22_638442168156516339_poster-phim-hoat-hinh.jpg" alt="Banner phim 1" />
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-tag"><i class="bi bi-star-fill" style="font-size:10px"></i> Đang chiếu</div>
+            <h1 class="hero-title">Tên Phim Nổi Bật 1</h1>
+            <div class="hero-meta">
+                <span class="badge-age badge-t16">T16</span>
+                <span>Hành động</span>
+                <span class="sep">·</span>
+                <span>120 phút</span>
+                <span class="sep">·</span>
+                <span>2025</span>
+            </div>
+            <p class="hero-desc">Mô tả ngắn về bộ phim. Một cuộc phiêu lưu đầy kịch tính và cảm xúc không thể bỏ lỡ trong mùa hè này.</p>
+            <div class="hero-actions">
+                <a href="/Booking" class="btn-primary-cv"><i class="bi bi-ticket-perforated-fill"></i> Đặt vé ngay</a>
+                <a href="/Movies/Detail/1" class="btn-outline-cv"><i class="bi bi-play-circle"></i> Xem trailer</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide" id="slide-1">
+        <img src="https://placehold.co/1400x540/0a1a2e/ffffff?text=BANNER+PHIM+2" alt="Banner phim 2" />
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-tag"><i class="bi bi-fire" style="font-size:10px"></i> Hot nhất tuần</div>
+            <h1 class="hero-title">Tên Phim Nổi Bật 2</h1>
+            <div class="hero-meta">
+                <span class="badge-age badge-t13">T13</span>
+                <span>Tâm lý</span>
+                <span class="sep">·</span>
+                <span>105 phút</span>
+                <span class="sep">·</span>
+                <span>2025</span>
+            </div>
+            <p class="hero-desc">Một bộ phim tâm lý sâu sắc, đưa khán giả vào hành trình khám phá bản thân đầy bất ngờ.</p>
+            <div class="hero-actions">
+                <a href="/Booking" class="btn-primary-cv"><i class="bi bi-ticket-perforated-fill"></i> Đặt vé ngay</a>
+                <a href="/Movies/Detail/2" class="btn-outline-cv"><i class="bi bi-play-circle"></i> Xem trailer</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide" id="slide-2">
+        <img src="https://placehold.co/1400x540/1a1a0a/ffffff?text=BANNER+PHIM+3" alt="Banner phim 3" />
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-tag"><i class="bi bi-calendar-event" style="font-size:10px"></i> Sắp ra mắt</div>
+            <h1 class="hero-title">Tên Phim Nổi Bật 3</h1>
+            <div class="hero-meta">
+                <span class="badge-age badge-t18">T18</span>
+                <span>Kinh dị</span>
+                <span class="sep">·</span>
+                <span>95 phút</span>
+                <span class="sep">·</span>
+                <span>2025</span>
+            </div>
+            <p class="hero-desc">Bộ phim kinh dị được mong chờ nhất năm. Đừng xem một mình!</p>
+            <div class="hero-actions">
+                <a href="/Booking" class="btn-primary-cv"><i class="bi bi-ticket-perforated-fill"></i> Đặt vé ngay</a>
+                <a href="/Movies/Detail/3" class="btn-outline-cv"><i class="bi bi-play-circle"></i> Xem trailer</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="hero-dots">
+        <button class="hero-dot active" onclick="goSlide(0)"></button>
+        <button class="hero-dot" onclick="goSlide(1)"></button>
+        <button class="hero-dot" onclick="goSlide(2)"></button>
+    </div>
+
+    <!-- Arrows -->
+    <div class="hero-arrows">
+        <button class="hero-arrow" onclick="changeSlide(-1)"><i class="bi bi-chevron-up"></i></button>
+        <button class="hero-arrow" onclick="changeSlide(1)"><i class="bi bi-chevron-down"></i></button>
+    </div>
+</section>
+
+<!-- QUICK BOOKING BAR -->
+<div class="booking-bar">
+    <div class="container">
+        <span class="booking-label">ĐẶT VÉ NHANH</span>
+        <select class="booking-select">
+            <option value="">🎬 Chọn phim</option>
+            <option>Tên Phim 1</option>
+            <option>Tên Phim 2</option>
+            <option>Tên Phim 3</option>
+        </select>
+        <select class="booking-select">
+            <option value="">📅 Chọn ngày</option>
+            <option>Hôm nay</option>
+            <option>Ngày mai</option>
+        </select>
+        <select class="booking-select">
+            <option value="">🕐 Chọn suất</option>
+            <option>10:00</option>
+            <option>13:30</option>
+            <option>16:00</option>
+            <option>19:30</option>
+        </select>
+        <button class="btn-book-now">ĐẶT NGAY →</button>
+    </div>
+</div>
+
+<!-- PHIM ĐANG CHIẾU -->
+<section class="cv-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">PHIM ĐANG CHIẾU</h2>
+                <p class="section-subtitle">Những bộ phim hot nhất hiện đang chiếu tại rạp</p>
+            </div>
+            <a href="/Movies">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="movie-grid">
+            @* Sau này thay bằng: foreach (var movie in Model.NowShowing) *@
+
+            @* Card 1 *@
+            <div class="movie-card" onclick="location.href='/Movies/Detail/1'">
+                <div class="movie-poster">
+                    <img src="https://placehold.co/300x450/1a0a2e/ffffff?text=Poster+1" alt="Poster phim 1" />
+                    <div class="movie-poster-overlay">
+                        <div class="btn-play"><i class="bi bi-play-fill"></i></div>
+                    </div>
+                    <div class="movie-badge-wrap">
+                        <span class="badge-age badge-t16">T16</span>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Tên Phim Dài Một Chút Ở Đây</div>
+                    <div class="movie-meta-row">
+                        <span class="movie-genre">Hành động</span>
+                        <span class="movie-duration"><i class="bi bi-clock" style="font-size:10px"></i> 120 phút</span>
+                    </div>
+                    <a href="/Booking?movieId=1" class="btn-book-card" onclick="event.stopPropagation()">Đặt vé</a>
+                </div>
+            </div>
+
+            @* Card 2 *@
+            <div class="movie-card" onclick="location.href='/Movies/Detail/2'">
+                <div class="movie-poster">
+                    <img src="https://placehold.co/300x450/0a1a2e/ffffff?text=Poster+2" alt="Poster phim 2" />
+                    <div class="movie-poster-overlay">
+                        <div class="btn-play"><i class="bi bi-play-fill"></i></div>
+                    </div>
+                    <div class="movie-badge-wrap">
+                        <span class="badge-age badge-t13">T13</span>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Tên Phim Thứ Hai</div>
+                    <div class="movie-meta-row">
+                        <span class="movie-genre">Tâm lý, Tình cảm</span>
+                        <span class="movie-duration"><i class="bi bi-clock" style="font-size:10px"></i> 105 phút</span>
+                    </div>
+                    <a href="/Booking?movieId=2" class="btn-book-card" onclick="event.stopPropagation()">Đặt vé</a>
+                </div>
+            </div>
+
+            @* Card 3 *@
+            <div class="movie-card" onclick="location.href='/Movies/Detail/3'">
+                <div class="movie-poster">
+                    <img src="https://placehold.co/300x450/1a1a0a/ffffff?text=Poster+3" alt="Poster phim 3" />
+                    <div class="movie-poster-overlay">
+                        <div class="btn-play"><i class="bi bi-play-fill"></i></div>
+                    </div>
+                    <div class="movie-badge-wrap">
+                        <span class="badge-age badge-t18">T18</span>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Tên Phim Thứ Ba</div>
+                    <div class="movie-meta-row">
+                        <span class="movie-genre">Kinh dị</span>
+                        <span class="movie-duration"><i class="bi bi-clock" style="font-size:10px"></i> 95 phút</span>
+                    </div>
+                    <a href="/Booking?movieId=3" class="btn-book-card" onclick="event.stopPropagation()">Đặt vé</a>
+                </div>
+            </div>
+
+            @* Card 4 *@
+            <div class="movie-card" onclick="location.href='/Movies/Detail/4'">
+                <div class="movie-poster">
+                    <img src="https://placehold.co/300x450/0a2e1a/ffffff?text=Poster+4" alt="Poster phim 4" />
+                    <div class="movie-poster-overlay">
+                        <div class="btn-play"><i class="bi bi-play-fill"></i></div>
+                    </div>
+                    <div class="movie-badge-wrap">
+                        <span class="badge-age badge-p">P</span>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Tên Phim Hoạt Hình Gia Đình</div>
+                    <div class="movie-meta-row">
+                        <span class="movie-genre">Hoạt hình</span>
+                        <span class="movie-duration"><i class="bi bi-clock" style="font-size:10px"></i> 88 phút</span>
+                    </div>
+                    <a href="/Booking?movieId=4" class="btn-book-card" onclick="event.stopPropagation()">Đặt vé</a>
+                </div>
+            </div>
+
+            @* Card 5 *@
+            <div class="movie-card" onclick="location.href='/Movies/Detail/5'">
+                <div class="movie-poster">
+                    <img src="https://placehold.co/300x450/2e0a1a/ffffff?text=Poster+5" alt="Poster phim 5" />
+                    <div class="movie-poster-overlay">
+                        <div class="btn-play"><i class="bi bi-play-fill"></i></div>
+                    </div>
+                    <div class="movie-badge-wrap">
+                        <span class="badge-age badge-t16">T16</span>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">Tên Phim Thứ Năm Dài Dài</div>
+                    <div class="movie-meta-row">
+                        <span class="movie-genre">Viễn tưởng</span>
+                        <span class="movie-duration"><i class="bi bi-clock" style="font-size:10px"></i> 135 phút</span>
+                    </div>
+                    <a href="/Booking?movieId=5" class="btn-book-card" onclick="event.stopPropagation()">Đặt vé</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PHIM SẮP CHIẾU -->
+<section class="cv-section" style="padding-top: 24px;">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">SẮP CHIẾU</h2>
+                <p class="section-subtitle">Đừng bỏ lỡ những bộ phim sắp ra mắt</p>
+            </div>
+            <a href="/Movies/Coming">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="coming-scroll-wrap">
+            <div class="coming-row">
+                @* Sau này thay bằng: foreach (var movie in Model.ComingSoon) *@
+
+                <div class="coming-card" onclick="location.href='/Movies/Detail/10'">
+                    <div class="coming-poster">
+                        <img src="https://placehold.co/160x220/1a0a2e/ffffff?text=Sắp+chiếu+1" alt="" />
+                        <div class="coming-date-badge">15/05</div>
+                    </div>
+                    <div class="coming-info">
+                        <div class="coming-title">Tên Phim Sắp Ra Mắt</div>
+                        <div class="coming-genre">Hành động</div>
+                    </div>
+                </div>
+
+                <div class="coming-card" onclick="location.href='/Movies/Detail/11'">
+                    <div class="coming-poster">
+                        <img src="https://placehold.co/160x220/0a1a2e/ffffff?text=Sắp+chiếu+2" alt="" />
+                        <div class="coming-date-badge">22/05</div>
+                    </div>
+                    <div class="coming-info">
+                        <div class="coming-title">Bộ Phim Mong Đợi</div>
+                        <div class="coming-genre">Viễn tưởng</div>
+                    </div>
+                </div>
+
+                <div class="coming-card" onclick="location.href='/Movies/Detail/12'">
+                    <div class="coming-poster">
+                        <img src="https://placehold.co/160x220/2e1a0a/ffffff?text=Sắp+chiếu+3" alt="" />
+                        <div class="coming-date-badge">01/06</div>
+                    </div>
+                    <div class="coming-info">
+                        <div class="coming-title">Phim Hoạt Hình Mới</div>
+                        <div class="coming-genre">Hoạt hình</div>
+                    </div>
+                </div>
+
+                <div class="coming-card" onclick="location.href='/Movies/Detail/13'">
+                    <div class="coming-poster">
+                        <img src="https://placehold.co/160x220/0a2e2e/ffffff?text=Sắp+chiếu+4" alt="" />
+                        <div class="coming-date-badge">08/06</div>
+                    </div>
+                    <div class="coming-info">
+                        <div class="coming-title">Kinh Dị Mùa Hè</div>
+                        <div class="coming-genre">Kinh dị</div>
+                    </div>
+                </div>
+
+                <div class="coming-card" onclick="location.href='/Movies/Detail/14'">
+                    <div class="coming-poster">
+                        <img src="https://placehold.co/160x220/1a2e0a/ffffff?text=Sắp+chiếu+5" alt="" />
+                        <div class="coming-date-badge">15/06</div>
+                    </div>
+                    <div class="coming-info">
+                        <div class="coming-title">Tình Cảm Lãng Mạn</div>
+                        <div class="coming-genre">Tình cảm</div>
+                    </div>
+                </div>
+
+                <div class="coming-card" onclick="location.href='/Movies/Detail/15'">
+                    <div class="coming-poster">
+                        <img src="https://placehold.co/160x220/2e0a2e/ffffff?text=Sắp+chiếu+6" alt="" />
+                        <div class="coming-date-badge">20/06</div>
+                    </div>
+                    <div class="coming-info">
+                        <div class="coming-title">Siêu Anh Hùng 2025</div>
+                        <div class="coming-genre">Hành động</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+    let currentSlide = 0;
+    const totalSlides = 3;
+    let autoSlide;
+
+    function goSlide(n) {
+        document.getElementById('slide-' + currentSlide).classList.remove('active');
+        document.querySelectorAll('.hero-dot')[currentSlide].classList.remove('active');
+        currentSlide = (n + totalSlides) % totalSlides;
+        document.getElementById('slide-' + currentSlide).classList.add('active');
+        document.querySelectorAll('.hero-dot')[currentSlide].classList.add('active');
+    }
+
+    function changeSlide(dir) {
+        clearInterval(autoSlide);
+        goSlide(currentSlide + dir);
+        startAuto();
+    }
+
+    function startAuto() {
+        autoSlide = setInterval(() => goSlide(currentSlide + 1), 5000);
+    }
+
+    startAuto();</script>
+}
