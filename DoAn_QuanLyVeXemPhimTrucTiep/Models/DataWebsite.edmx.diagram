@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9e0717465cb74ed0b456e4b14d20c02a" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="QL_VEPHIMModel.GHE" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.KHACHHANG" Width="1.5" PointX="9.625" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.KHUNGGIO" Width="1.5" PointX="2.125" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.LICHCHIEU" Width="1.5" PointX="6.375" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.LOAIGHE" Width="1.5" PointX="0.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.PHIM" Width="1.5" PointX="6.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.PHONGCHIEU" Width="1.5" PointX="2.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.RAPCHIEU" Width="1.5" PointX="0.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.sysdiagram" Width="1.5" PointX="18.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.THELOAI" Width="1.5" PointX="2.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VEPHIMModel.VE" Width="1.5" PointX="9.375" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_GHE_LOAIGHE" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_GHE_PHONG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_VE_GHE" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_VE_KH" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_LC_KG" ManuallyRouted="false" ></AssociationConnector>
+        <AssociationConnector Association="QL_VEPHIMModel.FK_LC_PHIM" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_LC_PHONG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_VE_LC" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.FK_PHONG_RAP" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VEPHIMModel.PHIM_THELOAI" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

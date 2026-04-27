@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using DoAn_QuanLyVeXemPhimTrucTiep.Models;
+namespace DoAn_QuanLyVeXemPhimTrucTiep.Controllers
+{
+    public class MoviesController : Controller
+    {
+        // GET: Movies
+        QL_VEPHIM_DuLieu data = new QL_VEPHIM_DuLieu();
+        public ActionResult DanhSachPhim(string trangthai = "Đang chiếu")
+        {
+            var phims = data.PHIMs
+                .Where(p => p.TRANGTHAI == trangthai)
+                .AsQueryable();
+            ViewBag.DanhSachPhim = phims.ToList();
+            ViewBag.TrangThai = trangthai;
+
+            return View();
+        }
+        public ActionResult ChiTietPhim(string id)
+        {
+            PHIM phim = data.PHIMs.FirstOrDefault(p=>p.MA_PHIM ==  id);
+            if (phim == null)
+            {
+                return HttpNotFound();
+            }
+            return View(phim);
+        }
+    }
+}
