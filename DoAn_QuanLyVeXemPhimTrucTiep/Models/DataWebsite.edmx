@@ -1,0 +1,774 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QL_VEPHIMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GHE">
+          <Key>
+            <PropertyRef Name="MA_GHE" />
+          </Key>
+          <Property Name="MA_GHE" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="SOGHE" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_PHONG" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_LOAIGHE" Type="nchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="KHACHHANG">
+          <Key>
+            <PropertyRef Name="MA_KHACH" />
+          </Key>
+          <Property Name="MA_KHACH" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="HOTEN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SDT" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="CCCD" Type="nchar" MaxLength="12" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MATKHAU" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="VAITRO" Type="nvarchar" MaxLength="10" />
+          <Property Name="NGAYTAO" Type="datetime" />
+        </EntityType>
+        <EntityType Name="KHUNGGIO">
+          <Key>
+            <PropertyRef Name="MA_KHUNGGIO" />
+          </Key>
+          <Property Name="MA_KHUNGGIO" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="GIOBATDAU" Type="time" Precision="7" Nullable="false" />
+          <Property Name="GIOKETTHUC" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LICHCHIEU">
+          <Key>
+            <PropertyRef Name="MA_LICHCHIEU" />
+          </Key>
+          <Property Name="MA_LICHCHIEU" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_PHIM" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_PHONG" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_KHUNGGIO" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="NGAYCHIEU" Type="date" Nullable="false" />
+          <Property Name="GIATVE_PHUTROI" Type="decimal" Precision="10" Scale="0" />
+        </EntityType>
+        <EntityType Name="LOAIGHE">
+          <Key>
+            <PropertyRef Name="MA_LOAIGHE" />
+          </Key>
+          <Property Name="MA_LOAIGHE" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEN_LOAIGHE" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="GIATVE" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PHIM">
+          <Key>
+            <PropertyRef Name="MA_PHIM" />
+          </Key>
+          <Property Name="MA_PHIM" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEN_PHIM" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="THOILUONG" Type="int" />
+          <Property Name="NGAYKHOICHIEU" Type="date" />
+          <Property Name="MOTA" Type="nvarchar(max)" />
+          <Property Name="POSTER" Type="nvarchar" MaxLength="255" />
+          <Property Name="DAO_DIEN" Type="nvarchar" MaxLength="100" />
+          <Property Name="DIEN_VIEN" Type="nvarchar" MaxLength="500" />
+          <Property Name="GIOI_HAN_TUOI" Type="nvarchar" MaxLength="5" />
+          <Property Name="TRANGTHAI" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="PHIM_THELOAI">
+          <Key>
+            <PropertyRef Name="MA_PHIM" />
+            <PropertyRef Name="MA_THELOAI" />
+          </Key>
+          <Property Name="MA_PHIM" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_THELOAI" Type="nchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PHONGCHIEU">
+          <Key>
+            <PropertyRef Name="MA_PHONG" />
+          </Key>
+          <Property Name="MA_PHONG" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEN_PHONG" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MA_RAP" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TONGSOGHE" Type="int" />
+        </EntityType>
+        <EntityType Name="RAPCHIEU">
+          <Key>
+            <PropertyRef Name="MA_RAP" />
+          </Key>
+          <Property Name="MA_RAP" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEN_RAP" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DIACHI" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="THELOAI">
+          <Key>
+            <PropertyRef Name="MA_THELOAI" />
+          </Key>
+          <Property Name="MA_THELOAI" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEN_THELOAI" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VE">
+          <Key>
+            <PropertyRef Name="MA_VE" />
+          </Key>
+          <Property Name="MA_VE" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_KHACH" Type="nchar" MaxLength="5" />
+          <Property Name="MA_LICHCHIEU" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MA_GHE" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="NGAYDAT" Type="datetime" />
+          <Property Name="TONGTIEN" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TRANGTHAI" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_GHE_LOAIGHE">
+          <End Role="LOAIGHE" Type="Self.LOAIGHE" Multiplicity="0..1" />
+          <End Role="GHE" Type="Self.GHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIGHE">
+              <PropertyRef Name="MA_LOAIGHE" />
+            </Principal>
+            <Dependent Role="GHE">
+              <PropertyRef Name="MA_LOAIGHE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GHE_PHONG">
+          <End Role="PHONGCHIEU" Type="Self.PHONGCHIEU" Multiplicity="1" />
+          <End Role="GHE" Type="Self.GHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHONGCHIEU">
+              <PropertyRef Name="MA_PHONG" />
+            </Principal>
+            <Dependent Role="GHE">
+              <PropertyRef Name="MA_PHONG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LC_KG">
+          <End Role="KHUNGGIO" Type="Self.KHUNGGIO" Multiplicity="1" />
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHUNGGIO">
+              <PropertyRef Name="MA_KHUNGGIO" />
+            </Principal>
+            <Dependent Role="LICHCHIEU">
+              <PropertyRef Name="MA_KHUNGGIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LC_PHIM">
+          <End Role="PHIM" Type="Self.PHIM" Multiplicity="1" />
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHIM">
+              <PropertyRef Name="MA_PHIM" />
+            </Principal>
+            <Dependent Role="LICHCHIEU">
+              <PropertyRef Name="MA_PHIM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LC_PHONG">
+          <End Role="PHONGCHIEU" Type="Self.PHONGCHIEU" Multiplicity="1" />
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHONGCHIEU">
+              <PropertyRef Name="MA_PHONG" />
+            </Principal>
+            <Dependent Role="LICHCHIEU">
+              <PropertyRef Name="MA_PHONG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHONG_RAP">
+          <End Role="RAPCHIEU" Type="Self.RAPCHIEU" Multiplicity="1" />
+          <End Role="PHONGCHIEU" Type="Self.PHONGCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAPCHIEU">
+              <PropertyRef Name="MA_RAP" />
+            </Principal>
+            <Dependent Role="PHONGCHIEU">
+              <PropertyRef Name="MA_RAP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PT_PHIM">
+          <End Role="PHIM" Type="Self.PHIM" Multiplicity="1" />
+          <End Role="PHIM_THELOAI" Type="Self.PHIM_THELOAI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHIM">
+              <PropertyRef Name="MA_PHIM" />
+            </Principal>
+            <Dependent Role="PHIM_THELOAI">
+              <PropertyRef Name="MA_PHIM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PT_THELOAI">
+          <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="1" />
+          <End Role="PHIM_THELOAI" Type="Self.PHIM_THELOAI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="THELOAI">
+              <PropertyRef Name="MA_THELOAI" />
+            </Principal>
+            <Dependent Role="PHIM_THELOAI">
+              <PropertyRef Name="MA_THELOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_GHE">
+          <End Role="GHE" Type="Self.GHE" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GHE">
+              <PropertyRef Name="MA_GHE" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MA_GHE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_KH">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="0..1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MA_KHACH" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MA_KHACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_LC">
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LICHCHIEU">
+              <PropertyRef Name="MA_LICHCHIEU" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MA_LICHCHIEU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QL_VEPHIMModelStoreContainer">
+          <EntitySet Name="GHE" EntityType="Self.GHE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHUNGGIO" EntityType="Self.KHUNGGIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LICHCHIEU" EntityType="Self.LICHCHIEU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOAIGHE" EntityType="Self.LOAIGHE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHIM" EntityType="Self.PHIM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHIM_THELOAI" EntityType="Self.PHIM_THELOAI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHONGCHIEU" EntityType="Self.PHONGCHIEU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RAPCHIEU" EntityType="Self.RAPCHIEU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="THELOAI" EntityType="Self.THELOAI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VE" EntityType="Self.VE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GHE_LOAIGHE" Association="Self.FK_GHE_LOAIGHE">
+            <End Role="LOAIGHE" EntitySet="LOAIGHE" />
+            <End Role="GHE" EntitySet="GHE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GHE_PHONG" Association="Self.FK_GHE_PHONG">
+            <End Role="PHONGCHIEU" EntitySet="PHONGCHIEU" />
+            <End Role="GHE" EntitySet="GHE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LC_KG" Association="Self.FK_LC_KG">
+            <End Role="KHUNGGIO" EntitySet="KHUNGGIO" />
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LC_PHIM" Association="Self.FK_LC_PHIM">
+            <End Role="PHIM" EntitySet="PHIM" />
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LC_PHONG" Association="Self.FK_LC_PHONG">
+            <End Role="PHONGCHIEU" EntitySet="PHONGCHIEU" />
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHONG_RAP" Association="Self.FK_PHONG_RAP">
+            <End Role="RAPCHIEU" EntitySet="RAPCHIEU" />
+            <End Role="PHONGCHIEU" EntitySet="PHONGCHIEU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PT_PHIM" Association="Self.FK_PT_PHIM">
+            <End Role="PHIM" EntitySet="PHIM" />
+            <End Role="PHIM_THELOAI" EntitySet="PHIM_THELOAI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PT_THELOAI" Association="Self.FK_PT_THELOAI">
+            <End Role="THELOAI" EntitySet="THELOAI" />
+            <End Role="PHIM_THELOAI" EntitySet="PHIM_THELOAI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_GHE" Association="Self.FK_VE_GHE">
+            <End Role="GHE" EntitySet="GHE" />
+            <End Role="VE" EntitySet="VE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_KH" Association="Self.FK_VE_KH">
+            <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+            <End Role="VE" EntitySet="VE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_LC" Association="Self.FK_VE_LC">
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEU" />
+            <End Role="VE" EntitySet="VE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QL_VEPHIMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GHE">
+          <Key>
+            <PropertyRef Name="MA_GHE" />
+          </Key>
+          <Property Name="MA_GHE" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="SOGHE" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MA_PHONG" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MA_LOAIGHE" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="LOAIGHE" Relationship="Self.FK_GHE_LOAIGHE" FromRole="GHE" ToRole="LOAIGHE" />
+          <NavigationProperty Name="PHONGCHIEU" Relationship="Self.FK_GHE_PHONG" FromRole="GHE" ToRole="PHONGCHIEU" />
+          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_GHE" FromRole="GHE" ToRole="VE" />
+        </EntityType>
+        <EntityType Name="KHACHHANG">
+          <Key>
+            <PropertyRef Name="MA_KHACH" />
+          </Key>
+          <Property Name="MA_KHACH" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="HOTEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CCCD" Type="String" MaxLength="12" FixedLength="true" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MATKHAU" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VAITRO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NGAYTAO" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_KH" FromRole="KHACHHANG" ToRole="VE" />
+        </EntityType>
+        <EntityType Name="KHUNGGIO">
+          <Key>
+            <PropertyRef Name="MA_KHUNGGIO" />
+          </Key>
+          <Property Name="MA_KHUNGGIO" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GIOBATDAU" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="GIOKETTHUC" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="LICHCHIEUx" Relationship="Self.FK_LC_KG" FromRole="KHUNGGIO" ToRole="LICHCHIEU" />
+        </EntityType>
+        <EntityType Name="LICHCHIEU">
+          <Key>
+            <PropertyRef Name="MA_LICHCHIEU" />
+          </Key>
+          <Property Name="MA_LICHCHIEU" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MA_PHIM" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MA_PHONG" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MA_KHUNGGIO" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NGAYCHIEU" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GIATVE_PHUTROI" Type="Decimal" Precision="10" Scale="0" />
+          <NavigationProperty Name="KHUNGGIO" Relationship="Self.FK_LC_KG" FromRole="LICHCHIEU" ToRole="KHUNGGIO" />
+          <NavigationProperty Name="PHIM" Relationship="Self.FK_LC_PHIM" FromRole="LICHCHIEU" ToRole="PHIM" />
+          <NavigationProperty Name="PHONGCHIEU" Relationship="Self.FK_LC_PHONG" FromRole="LICHCHIEU" ToRole="PHONGCHIEU" />
+          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_LC" FromRole="LICHCHIEU" ToRole="VE" />
+        </EntityType>
+        <EntityType Name="LOAIGHE">
+          <Key>
+            <PropertyRef Name="MA_LOAIGHE" />
+          </Key>
+          <Property Name="MA_LOAIGHE" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TEN_LOAIGHE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GIATVE" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="GHEs" Relationship="Self.FK_GHE_LOAIGHE" FromRole="LOAIGHE" ToRole="GHE" />
+        </EntityType>
+        <EntityType Name="PHIM">
+          <Key>
+            <PropertyRef Name="MA_PHIM" />
+          </Key>
+          <Property Name="MA_PHIM" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TEN_PHIM" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="THOILUONG" Type="Int32" />
+          <Property Name="NGAYKHOICHIEU" Type="DateTime" Precision="0" />
+          <Property Name="MOTA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="POSTER" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DAO_DIEN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DIEN_VIEN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="GIOI_HAN_TUOI" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TRANGTHAI" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LICHCHIEUx" Relationship="Self.FK_LC_PHIM" FromRole="PHIM" ToRole="LICHCHIEU" />
+          <NavigationProperty Name="THELOAIs" Relationship="Self.PHIM_THELOAI" FromRole="PHIM" ToRole="THELOAI" />
+        </EntityType>
+        <EntityType Name="PHONGCHIEU">
+          <Key>
+            <PropertyRef Name="MA_PHONG" />
+          </Key>
+          <Property Name="MA_PHONG" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TEN_PHONG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MA_RAP" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TONGSOGHE" Type="Int32" />
+          <NavigationProperty Name="GHEs" Relationship="Self.FK_GHE_PHONG" FromRole="PHONGCHIEU" ToRole="GHE" />
+          <NavigationProperty Name="LICHCHIEUx" Relationship="Self.FK_LC_PHONG" FromRole="PHONGCHIEU" ToRole="LICHCHIEU" />
+          <NavigationProperty Name="RAPCHIEU" Relationship="Self.FK_PHONG_RAP" FromRole="PHONGCHIEU" ToRole="RAPCHIEU" />
+        </EntityType>
+        <EntityType Name="RAPCHIEU">
+          <Key>
+            <PropertyRef Name="MA_RAP" />
+          </Key>
+          <Property Name="MA_RAP" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TEN_RAP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DIACHI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHONGCHIEUx" Relationship="Self.FK_PHONG_RAP" FromRole="RAPCHIEU" ToRole="PHONGCHIEU" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="THELOAI">
+          <Key>
+            <PropertyRef Name="MA_THELOAI" />
+          </Key>
+          <Property Name="MA_THELOAI" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TEN_THELOAI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PHIMs" Relationship="Self.PHIM_THELOAI" FromRole="THELOAI" ToRole="PHIM" />
+        </EntityType>
+        <EntityType Name="VE">
+          <Key>
+            <PropertyRef Name="MA_VE" />
+          </Key>
+          <Property Name="MA_VE" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MA_KHACH" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="MA_LICHCHIEU" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MA_GHE" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NGAYDAT" Type="DateTime" Precision="3" />
+          <Property Name="TONGTIEN" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TRANGTHAI" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GHE" Relationship="Self.FK_VE_GHE" FromRole="VE" ToRole="GHE" />
+          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_VE_KH" FromRole="VE" ToRole="KHACHHANG" />
+          <NavigationProperty Name="LICHCHIEU" Relationship="Self.FK_VE_LC" FromRole="VE" ToRole="LICHCHIEU" />
+        </EntityType>
+        <Association Name="FK_GHE_LOAIGHE">
+          <End Role="LOAIGHE" Type="Self.LOAIGHE" Multiplicity="0..1" />
+          <End Role="GHE" Type="Self.GHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIGHE">
+              <PropertyRef Name="MA_LOAIGHE" />
+            </Principal>
+            <Dependent Role="GHE">
+              <PropertyRef Name="MA_LOAIGHE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GHE_PHONG">
+          <End Role="PHONGCHIEU" Type="Self.PHONGCHIEU" Multiplicity="1" />
+          <End Role="GHE" Type="Self.GHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHONGCHIEU">
+              <PropertyRef Name="MA_PHONG" />
+            </Principal>
+            <Dependent Role="GHE">
+              <PropertyRef Name="MA_PHONG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_GHE">
+          <End Role="GHE" Type="Self.GHE" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GHE">
+              <PropertyRef Name="MA_GHE" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MA_GHE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_KH">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="0..1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MA_KHACH" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MA_KHACH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LC_KG">
+          <End Role="KHUNGGIO" Type="Self.KHUNGGIO" Multiplicity="1" />
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHUNGGIO">
+              <PropertyRef Name="MA_KHUNGGIO" />
+            </Principal>
+            <Dependent Role="LICHCHIEU">
+              <PropertyRef Name="MA_KHUNGGIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LC_PHIM">
+          <End Role="PHIM" Type="Self.PHIM" Multiplicity="1" />
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHIM">
+              <PropertyRef Name="MA_PHIM" />
+            </Principal>
+            <Dependent Role="LICHCHIEU">
+              <PropertyRef Name="MA_PHIM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LC_PHONG">
+          <End Role="PHONGCHIEU" Type="Self.PHONGCHIEU" Multiplicity="1" />
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PHONGCHIEU">
+              <PropertyRef Name="MA_PHONG" />
+            </Principal>
+            <Dependent Role="LICHCHIEU">
+              <PropertyRef Name="MA_PHONG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_LC">
+          <End Role="LICHCHIEU" Type="Self.LICHCHIEU" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LICHCHIEU">
+              <PropertyRef Name="MA_LICHCHIEU" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MA_LICHCHIEU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHONG_RAP">
+          <End Role="RAPCHIEU" Type="Self.RAPCHIEU" Multiplicity="1" />
+          <End Role="PHONGCHIEU" Type="Self.PHONGCHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAPCHIEU">
+              <PropertyRef Name="MA_RAP" />
+            </Principal>
+            <Dependent Role="PHONGCHIEU">
+              <PropertyRef Name="MA_RAP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PHIM_THELOAI">
+          <End Role="PHIM" Type="Self.PHIM" Multiplicity="*" />
+          <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="QL_VEPHIM_DuLieu" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GHEs" EntityType="Self.GHE" />
+          <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
+          <EntitySet Name="KHUNGGIOs" EntityType="Self.KHUNGGIO" />
+          <EntitySet Name="LICHCHIEUx" EntityType="Self.LICHCHIEU" />
+          <EntitySet Name="LOAIGHEs" EntityType="Self.LOAIGHE" />
+          <EntitySet Name="PHIMs" EntityType="Self.PHIM" />
+          <EntitySet Name="PHONGCHIEUx" EntityType="Self.PHONGCHIEU" />
+          <EntitySet Name="RAPCHIEUx" EntityType="Self.RAPCHIEU" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="THELOAIs" EntityType="Self.THELOAI" />
+          <EntitySet Name="VEs" EntityType="Self.VE" />
+          <AssociationSet Name="FK_GHE_LOAIGHE" Association="Self.FK_GHE_LOAIGHE">
+            <End Role="LOAIGHE" EntitySet="LOAIGHEs" />
+            <End Role="GHE" EntitySet="GHEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GHE_PHONG" Association="Self.FK_GHE_PHONG">
+            <End Role="PHONGCHIEU" EntitySet="PHONGCHIEUx" />
+            <End Role="GHE" EntitySet="GHEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_GHE" Association="Self.FK_VE_GHE">
+            <End Role="GHE" EntitySet="GHEs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_KH" Association="Self.FK_VE_KH">
+            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LC_KG" Association="Self.FK_LC_KG">
+            <End Role="KHUNGGIO" EntitySet="KHUNGGIOs" />
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEUx" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LC_PHIM" Association="Self.FK_LC_PHIM">
+            <End Role="PHIM" EntitySet="PHIMs" />
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEUx" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LC_PHONG" Association="Self.FK_LC_PHONG">
+            <End Role="PHONGCHIEU" EntitySet="PHONGCHIEUx" />
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEUx" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_LC" Association="Self.FK_VE_LC">
+            <End Role="LICHCHIEU" EntitySet="LICHCHIEUx" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHONG_RAP" Association="Self.FK_PHONG_RAP">
+            <End Role="RAPCHIEU" EntitySet="RAPCHIEUx" />
+            <End Role="PHONGCHIEU" EntitySet="PHONGCHIEUx" />
+          </AssociationSet>
+          <AssociationSet Name="PHIM_THELOAI" Association="Self.PHIM_THELOAI">
+            <End Role="PHIM" EntitySet="PHIMs" />
+            <End Role="THELOAI" EntitySet="THELOAIs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QL_VEPHIMModelStoreContainer" CdmEntityContainer="QL_VEPHIM_DuLieu">
+          <EntitySetMapping Name="GHEs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.GHE">
+              <MappingFragment StoreEntitySet="GHE">
+                <ScalarProperty Name="MA_GHE" ColumnName="MA_GHE" />
+                <ScalarProperty Name="SOGHE" ColumnName="SOGHE" />
+                <ScalarProperty Name="MA_PHONG" ColumnName="MA_PHONG" />
+                <ScalarProperty Name="MA_LOAIGHE" ColumnName="MA_LOAIGHE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHACHHANGs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.KHACHHANG">
+              <MappingFragment StoreEntitySet="KHACHHANG">
+                <ScalarProperty Name="MA_KHACH" ColumnName="MA_KHACH" />
+                <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="CCCD" ColumnName="CCCD" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
+                <ScalarProperty Name="VAITRO" ColumnName="VAITRO" />
+                <ScalarProperty Name="NGAYTAO" ColumnName="NGAYTAO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHUNGGIOs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.KHUNGGIO">
+              <MappingFragment StoreEntitySet="KHUNGGIO">
+                <ScalarProperty Name="MA_KHUNGGIO" ColumnName="MA_KHUNGGIO" />
+                <ScalarProperty Name="GIOBATDAU" ColumnName="GIOBATDAU" />
+                <ScalarProperty Name="GIOKETTHUC" ColumnName="GIOKETTHUC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LICHCHIEUx">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.LICHCHIEU">
+              <MappingFragment StoreEntitySet="LICHCHIEU">
+                <ScalarProperty Name="MA_LICHCHIEU" ColumnName="MA_LICHCHIEU" />
+                <ScalarProperty Name="MA_PHIM" ColumnName="MA_PHIM" />
+                <ScalarProperty Name="MA_PHONG" ColumnName="MA_PHONG" />
+                <ScalarProperty Name="MA_KHUNGGIO" ColumnName="MA_KHUNGGIO" />
+                <ScalarProperty Name="NGAYCHIEU" ColumnName="NGAYCHIEU" />
+                <ScalarProperty Name="GIATVE_PHUTROI" ColumnName="GIATVE_PHUTROI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOAIGHEs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.LOAIGHE">
+              <MappingFragment StoreEntitySet="LOAIGHE">
+                <ScalarProperty Name="MA_LOAIGHE" ColumnName="MA_LOAIGHE" />
+                <ScalarProperty Name="TEN_LOAIGHE" ColumnName="TEN_LOAIGHE" />
+                <ScalarProperty Name="GIATVE" ColumnName="GIATVE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHIMs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.PHIM">
+              <MappingFragment StoreEntitySet="PHIM">
+                <ScalarProperty Name="MA_PHIM" ColumnName="MA_PHIM" />
+                <ScalarProperty Name="TEN_PHIM" ColumnName="TEN_PHIM" />
+                <ScalarProperty Name="THOILUONG" ColumnName="THOILUONG" />
+                <ScalarProperty Name="NGAYKHOICHIEU" ColumnName="NGAYKHOICHIEU" />
+                <ScalarProperty Name="MOTA" ColumnName="MOTA" />
+                <ScalarProperty Name="POSTER" ColumnName="POSTER" />
+                <ScalarProperty Name="DAO_DIEN" ColumnName="DAO_DIEN" />
+                <ScalarProperty Name="DIEN_VIEN" ColumnName="DIEN_VIEN" />
+                <ScalarProperty Name="GIOI_HAN_TUOI" ColumnName="GIOI_HAN_TUOI" />
+                <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHONGCHIEUx">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.PHONGCHIEU">
+              <MappingFragment StoreEntitySet="PHONGCHIEU">
+                <ScalarProperty Name="MA_PHONG" ColumnName="MA_PHONG" />
+                <ScalarProperty Name="TEN_PHONG" ColumnName="TEN_PHONG" />
+                <ScalarProperty Name="MA_RAP" ColumnName="MA_RAP" />
+                <ScalarProperty Name="TONGSOGHE" ColumnName="TONGSOGHE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RAPCHIEUx">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.RAPCHIEU">
+              <MappingFragment StoreEntitySet="RAPCHIEU">
+                <ScalarProperty Name="MA_RAP" ColumnName="MA_RAP" />
+                <ScalarProperty Name="TEN_RAP" ColumnName="TEN_RAP" />
+                <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="THELOAIs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.THELOAI">
+              <MappingFragment StoreEntitySet="THELOAI">
+                <ScalarProperty Name="MA_THELOAI" ColumnName="MA_THELOAI" />
+                <ScalarProperty Name="TEN_THELOAI" ColumnName="TEN_THELOAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEs">
+            <EntityTypeMapping TypeName="QL_VEPHIMModel.VE">
+              <MappingFragment StoreEntitySet="VE">
+                <ScalarProperty Name="MA_VE" ColumnName="MA_VE" />
+                <ScalarProperty Name="MA_KHACH" ColumnName="MA_KHACH" />
+                <ScalarProperty Name="MA_LICHCHIEU" ColumnName="MA_LICHCHIEU" />
+                <ScalarProperty Name="MA_GHE" ColumnName="MA_GHE" />
+                <ScalarProperty Name="NGAYDAT" ColumnName="NGAYDAT" />
+                <ScalarProperty Name="TONGTIEN" ColumnName="TONGTIEN" />
+                <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PHIM_THELOAI" TypeName="QL_VEPHIMModel.PHIM_THELOAI" StoreEntitySet="PHIM_THELOAI">
+            <EndProperty Name="PHIM">
+              <ScalarProperty Name="MA_PHIM" ColumnName="MA_PHIM" />
+            </EndProperty>
+            <EndProperty Name="THELOAI">
+              <ScalarProperty Name="MA_THELOAI" ColumnName="MA_THELOAI" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
